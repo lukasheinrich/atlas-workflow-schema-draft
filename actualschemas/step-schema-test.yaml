@@ -15,3 +15,12 @@
     envscript: /resource/setup.sh
     envvars:
       ROOTSYS: /usr/local
+- process:
+    process-type: 'string-interpolated-cmd'
+    cmd: './hello_world {input_attr} {output_attr}'
+  publisher:
+    publisher-type: 'process-attr-pub'
+  environment:
+    environment-type: 'docker-encapsulated'
+    image: lukasheinrich/walkthrough_one
+  
