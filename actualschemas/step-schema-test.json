@@ -19,5 +19,18 @@
       "envscript":"/resources/setup.sh",
       "envvars":{"ROOTSYS":"/usr/local"}
     }
+  },
+  {
+    "process":{
+      "process-type":"string-interpolated-cmd",
+      "cmd":"./hello_world"
+    },
+    "publisher":  {
+      "publisher-type": "process-attr-pub"
+    },
+    "environment":  {
+      "environment-type": "docker-encapsulated",
+      "image": "lukasheinrich/walkthrough_one"
+    }
   }
 ]
