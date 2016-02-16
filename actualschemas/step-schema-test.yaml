@@ -1,0 +1,17 @@
+- process:
+    process-type: 'string-interpolated-cmd'
+    cmd: './hello_world {input_attr} {output_attr}'
+  publisher:
+    publisher-type: 'process-attr-pub'
+    outputmap:
+      output: 'output_attr'
+  environment:
+    environment-type: 'docker-encapsulated'
+    image: lukasheinrich/walkthrough_one
+    imagetag: latest
+    resources:
+      - CVMFS
+      - GRIDProxy
+    envscript: /resource/setup.sh
+    envvars:
+      ROOTSYS: /usr/local

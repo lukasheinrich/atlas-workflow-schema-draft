@@ -2,6 +2,7 @@
 import json
 import os
 import jsonschema
+import yaml
 from jsonschema import Draft4Validator, validators
 
 
@@ -34,6 +35,10 @@ def validate_schema(schema_name):
     resolver = jsonschema.RefResolver('file://' + absbase + '/', schema)
 
     testobjects = json.load(open('actualschemas/{}-test.json'.format(schema_name)))
+
+    yamlpath = 'actualschemas/{}-test.yaml'.format(schema_name)
+    if os.path.exists(yamlpath):
+        testobjects += yaml.load(open(yamlpath))
     for o in testobjects:
         DefaultValidatingDraft4Validator(schema, resolver = resolver).validate(o)
     
