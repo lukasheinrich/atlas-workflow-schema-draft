@@ -1,0 +1,12 @@
+[
+  {
+    "publisher-type": "process-attr-pub"
+  },
+  {
+    "publisher-type": "process-attr-pub",
+    "outputmap": {
+      "output": "outList",
+      "another output": ["onePar", "anotherPar"]
+    }
+  }
+]
