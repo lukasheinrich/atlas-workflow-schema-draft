@@ -41,26 +41,33 @@ def loader(base_uri):
         return jsonref.load_uri('{}/{}'.format(base_uri,uri), base_uri = base_uri, loader = yamlloader)
     return load
 
-def validate_workflow(workflowyml, toplevel ):
-    schema_name = 'workflow-schema'
-    relpath     = 'justschemas/{}.json'.format(schema_name)
-    abspath = os.path.abspath(relpath)
-    absbase = os.path.dirname(abspath)
-    schema_base_uri = 'file://' + absbase + '/'
-
-    schema   = json.load(open(relpath))
-    resolver = jsonschema.RefResolver(schema_base_uri, schema)
+def workflow_loader(workflowyml,toplevel):
     workflow_base_uri = 'file://' + os.path.abspath(toplevel) + '/'
     refloader = loader(workflow_base_uri)
     workflow = refloader(workflowyml)
-    DefaultValidatingDraft4Validator(schema, resolver = resolver).validate(workflow)
+    return workflow
+
+def validator(schemadir):
+    schema_name = 'workflow-schema'
+    relpath     = '{}/{}.json'.format(schemadir,schema_name)
+    abspath = os.path.abspath(relpath)
+    absbase = os.path.dirname(abspath)
+    schema_base_uri = 'file://' + absbase + '/'
+    schema   = json.load(open(relpath))
+    resolver = jsonschema.RefResolver(schema_base_uri, schema)
+    return DefaultValidatingDraft4Validator(schema, resolver = resolver)
+
+def validate_workflow(workflowyml, toplevel, schemadir):
+    workflow = workflow_loader(workflowyml,toplevel)
+    validator(schemadir).validate(workflow)
     return True
 
 @click.command()
 @click.argument('workflow')
 @click.argument('toplevel')
-def main(workflow,toplevel):
-    print validate_workflow(workflow.replace(toplevel.rstrip('/')+'/',''), toplevel = toplevel)
+@click.argument('schemadir')
+def main(workflow,toplevel,schemadir):
+    print validate_workflow(workflow.replace(toplevel.rstrip('/')+'/',''), toplevel = toplevel, schemadir = schemadir)
     
 if __name__ == '__main__':
     main()
