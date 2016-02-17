@@ -15,12 +15,13 @@
     },
     "scheduler": {
       "type": "object",
-      "properties": {}
+      "oneOf":[
+        {"$ref":"nodemap-scheduler-schema.json#"}
+      ]
     }
   },
   "required": [
     "name",
-    "parameters",
     "scheduler"
   ]
 }

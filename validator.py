@@ -53,10 +53,9 @@ def validate_schema(schema_name):
         testobjects += yaml.load(open(yamlpath))
     for o in testobjects:
         DefaultValidatingDraft4Validator(schema, resolver = resolver).validate(o)
-        print o
 
 def main():
-    for s in ['nodemap-scheduler-schema']:
+    for s in ['docker-enc-schema','fromattr-pub-schema','nodemap-scheduler-schema','stage-schema','step-schema','stringinterp-schema','workflow-schema']:
         print "validating {}".format(s)
         validate_schema(s)
     
