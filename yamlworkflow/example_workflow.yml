@@ -1,0 +1,74 @@
+context:
+  dataset: ~
+  efficiency_file: ~
+  xsections_file: ~
+  modelName: ~
+stages:
+  - name: download
+    parameters:
+      dataset: '{dataset}'
+      outDir: '/workdir/grid_download'
+      outList: '/workdir/files.list'
+    scheduler:
+      scheduler-type: 'singlenode-from-context'
+      nodes:
+        single: {$ref: 'steps/downloadnode.yml'} 
+  - name: ntupling
+    dependencies:
+      - download
+    parameters:
+      minintup: '/workdir/mini.root'
+      maxsyst: 1
+      input_type: '-mc'
+      filter: '-nomllalpgenfilter'
+      blinded: '-unblind'
+      include_truth: '-truth'
+    scheduler:
+      scheduler-type: 'reduce-from-dep-output'
+      nodes:
+        reduce: {$ref: 'steps/ntupling.yml'} 
+      from_stage: download
+      take_outputs: output
+      to_input: filelist
+  - name: histfitprepare
+    dependencies:
+      - ntupling
+    parameters:
+      efficiency_file: '{efficiency_file}'
+      xsections_file: '{xsections_file}'
+      modelName: '{modelName}'
+      histfittree_file: '/workdir/out.root'
+      yield_file: '/workdir/out.yield'
+    scheduler:
+      scheduler-type: 'reduce-from-dep-output'
+      nodes:
+        reduce: {$ref: 'steps/histfitprep.yml'}
+      from_stage: ntupling
+      take_outputs: output
+      to_input: miniroot
+  - name: fit
+    dependencies:
+      - histfitprepare
+    parameters:
+      fitresults: '/workdir/fit.tgz'
+    scheduler:
+      scheduler-type: 'reduce-from-dep-output'
+      nodes:
+        reduce: {$ref: 'steps/fit.yml'}
+      from_stage: histfitprepare
+      take_outputs: output_tree
+      to_input: histfitroot
+  - name: postproc
+    dependencies:
+      - fit
+    parameters:
+      workdir: '/workdir/postproc'
+      modelName: '{modelName}'
+      resultsyaml: '/workdir/results.yaml'
+    scheduler:
+      scheduler-type: 'reduce-from-dep-output'
+      nodes:
+        reduce: {$ref: 'steps/postproc.yml'}
+      from_stage: fit
+      take_outputs: output
+      to_input: fitresultsarchive
