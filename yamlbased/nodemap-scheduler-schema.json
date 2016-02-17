@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "nodes": {
+      "type": "object",
+      "patternProperties": {
+        "[a-z]": {
+          "type": "object",
+          "oneOf":[{"$ref":"step-schema.json#"}]
+        }
+      }
+    }
+  },
+  "required": [
+    "nodes"
+  ]
+}

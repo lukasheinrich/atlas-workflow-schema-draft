@@ -1,0 +1,11 @@
+- environment-type: 'docker-encapsulated'
+  image: lukasheinrich/walkthrough_one
+- environment-type: docker-encapsulated
+  envscript: /resources/setup.sh
+  envvars:
+    ROOTSYS: /usr/local
+  image: lukasheinrich/walkthrough_one
+  imagetag: latest
+  resources:
+  - CVMFS
+  - GRIDProxy

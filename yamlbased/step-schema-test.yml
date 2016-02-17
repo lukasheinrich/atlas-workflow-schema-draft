@@ -1,0 +1,28 @@
+- environment:
+    environment-type: docker-encapsulated
+    envscript: /resources/setup.sh
+    envvars:
+      ROOTSYS: /usr/local
+    image: lukasheinrich/walkthrough_one
+    imagetag: latest
+    resources:
+    - CVMFS
+    - GRIDProxy
+  process:
+    cmd: ./hello_world {outList} {onePar} {anotherPar}
+    process-type: string-interpolated-cmd
+  publisher:
+    outputmap:
+      another output:
+      - onePar
+      - anotherPar
+      output: outList
+    publisher-type: process-attr-pub
+- environment:
+    environment-type: docker-encapsulated
+    image: lukasheinrich/walkthrough_one
+  process:
+    cmd: ./hello_world
+    process-type: string-interpolated-cmd
+  publisher:
+    publisher-type: process-attr-pub

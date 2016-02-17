@@ -1,0 +1,7 @@
+- publisher-type: process-attr-pub
+- outputmap:
+    another output:
+    - onePar
+    - anotherPar
+    output: outList
+  publisher-type: process-attr-pub

@@ -1,0 +1,6 @@
+- context: {}
+  stages:
+  - name: first stage
+    scheduler:
+      nodes:
+        map: {$ref: 'known_nodes.yml#/examples/hello_world_complex'}

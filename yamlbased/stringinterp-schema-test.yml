@@ -1,0 +1,4 @@
+- cmd: ./hello_world {someattr} {anotherattr}
+  process-type: string-interpolated-cmd
+- cmd: ./hello_world
+  process-type: string-interpolated-cmd

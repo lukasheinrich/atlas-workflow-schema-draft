@@ -1,0 +1,42 @@
+context:
+  dataset: ~
+  efficiency_file: ~
+  modelName: ~
+stages:
+  - name: download
+    parameters:
+      dataset: '{dataset}'
+      outDir: '/workdir/grid_download'
+      outList: '/workdir/files.list'
+  - name: ntupling
+    dependencies:
+      - download
+    parameters:
+      minintuple: '/workdir/mini.root'
+      maxsyst: 1
+      input_type: '-mc'
+      filter: '-nomllalpgenfilter'
+      blinded: '-unblind'
+      include_truth: '-truth'
+  - name: histfitprepare
+    dependencies:
+      - ntupling
+    parameters:
+      efficiency_file: '{efficiency_file}'
+      xsections_file: '{xsections_file}'
+      modelName: '{modelName}'
+      histfittree_file: '/workdir/out.root'
+      yield_file: '/workdir/out.yield'
+  - name: fit
+    dependencies:
+      - histfitprepare
+    parameters:
+      histfitroot: '/workdir/out.root'
+      fitresults: '/workdir/fit.tgz'
+  - name: postproc
+    dependencies:
+      - fit
+    parameters:
+      workdir: '/workdir/postproc'
+      modelName: '{modelName}'
+      resultsyaml: '/workdir/results.yaml'
