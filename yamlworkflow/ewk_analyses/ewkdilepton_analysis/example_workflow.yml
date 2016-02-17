@@ -12,7 +12,7 @@ stages:
     scheduler:
       scheduler-type: 'singlenode-from-context'
       nodes:
-        single: {$ref: 'steps/downloadnode.yml'} 
+        single: {$ref: 'common_steps/downloadnode.yml'} 
   - name: ntupling
     dependencies:
       - download
@@ -26,7 +26,7 @@ stages:
     scheduler:
       scheduler-type: 'reduce-from-dep-output'
       nodes:
-        reduce: {$ref: 'steps/ntupling.yml'} 
+        reduce: {$ref: 'ewksusy_steps/ntupling.yml'} 
       from_stage: download
       take_outputs: output
       to_input: filelist
@@ -42,7 +42,7 @@ stages:
     scheduler:
       scheduler-type: 'reduce-from-dep-output'
       nodes:
-        reduce: {$ref: 'steps/histfitprep.yml'}
+        reduce: {$ref: 'ewk_analyses/ewkdilepton_analysis/histfitprep.yml'}
       from_stage: ntupling
       take_outputs: output
       to_input: miniroot
@@ -54,7 +54,7 @@ stages:
     scheduler:
       scheduler-type: 'reduce-from-dep-output'
       nodes:
-        reduce: {$ref: 'steps/fit.yml'}
+        reduce: {$ref: 'ewk_analyses/ewkdilepton_analysis/fit.yml'}
       from_stage: histfitprepare
       take_outputs: output_tree
       to_input: histfitroot
@@ -68,7 +68,7 @@ stages:
     scheduler:
       scheduler-type: 'reduce-from-dep-output'
       nodes:
-        reduce: {$ref: 'steps/postproc.yml'}
+        reduce: {$ref: 'ewk_analyses/ewkdilepton_analysis/postproc.yml'}
       from_stage: fit
       take_outputs: output
       to_input: fitresultsarchive
