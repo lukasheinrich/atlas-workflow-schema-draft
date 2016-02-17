@@ -1,6 +1,7 @@
 context:
   dataset: ~
   efficiency_file: ~
+  xsections_file: ~
   modelName: ~
 stages:
   - name: download
