@@ -1,0 +1,5 @@
+{
+  "hello":"what",
+  "link_to_foobar":{"$ref":"foobar.json#/hello"},
+  "link_to_foobar":{"$ref":"foobar.json#/link_to_what"}
+}

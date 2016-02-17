@@ -2,7 +2,7 @@
   {
     "process":{
       "process-type":"string-interpolated-cmd",
-      "cmd":"./hello_world"
+      "cmd":"./hello_world {outList} {onePar} {anotherPar}"
     },
     "publisher":  {
       "publisher-type": "process-attr-pub",

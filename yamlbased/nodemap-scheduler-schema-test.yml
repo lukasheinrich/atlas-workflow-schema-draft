@@ -1,0 +1,6 @@
+- node_map:
+    map:
+      $ref: 'known_nodes.yml#examples/hello_world_node'
+    reduce:
+      $ref: 'known_nodes.yml#examples/hello_world_complex'
+      

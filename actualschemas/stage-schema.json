@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": []
+    },
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    },
+    "scheduler": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  "required": [
+    "name",
+    "parameters",
+    "scheduler"
+  ]
+}

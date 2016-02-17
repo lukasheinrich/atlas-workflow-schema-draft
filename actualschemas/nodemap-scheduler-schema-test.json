@@ -1,0 +1,8 @@
+[
+  {
+    "nodes":{
+      "map":{"$ref":"known_nodes.json#/examples/hello_world_node"},
+      "reduce":{"$ref":"known_nodes.json#/examples/hello_world_complex"}
+    }
+  }
+]

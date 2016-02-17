@@ -1,0 +1,40 @@
+{
+  "examples":{
+    "hello_world_node":{
+      "process":{
+        "process-type":"string-interpolated-cmd",
+        "cmd":"./hello_world"
+      },
+      "publisher":  {
+        "publisher-type": "process-attr-pub"
+      },
+      "environment":  {
+        "environment-type": "docker-encapsulated",
+        "image": "lukasheinrich/walkthrough_one"
+      }
+    },
+    "hello_world_complex":{
+      "process":{
+        "process-type":"string-interpolated-cmd",
+        "cmd":"./hello_world {outList} {onePar} {anotherPar}"
+      },
+      "publisher":  {
+        "publisher-type": "process-attr-pub",
+        "outputmap": {
+          "output": "outList",
+          "another output": ["onePar", "anotherPar"]
+        }
+      },
+      "environment":  {
+        "environment-type": "docker-encapsulated",
+        "image": "lukasheinrich/walkthrough_one",
+        "imagetag":"latest",
+        "resources":["CVMFS","GRIDProxy"],
+        "envscript":"/resources/setup.sh",
+        "envvars":{"ROOTSYS":"/usr/local"}
+      }
+    }
+  
+  }
+
+}
